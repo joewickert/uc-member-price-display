@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * Implements hook_field_extra_fields().
+ *
+ * Add the regular and member price to the node display fields for display on product page.
+ *
+ * @see uc_product_field_extra_fields().
+ */
+function bpea_member_price_field_extra_fields() {
+  $extra = array();
+
+  foreach (uc_product_types() as $type) {
+    $extra['node'][$type] = array(
+      'display' => array(
+        'roleindependent_sell_price' => array(
+          'label' => t('Regular price'),
+          'description' => t('Price for non-members'),
+          'weight' => 4,
+        ),
+        'member_price' => array(
+          'label' => t('Member price'),
+          'description' => t('Price for members.'),
+          'weight' => 5,
+        ),
+      ),
+    );
+  }
+
+  return $extra;
+}
+
+
+/**
+ * Implements hook_node_view().
+ *
+ * Add a display of the member price to the product display.
+ *
+ * @see uc_product_view().
+ */
+function bpea_member_price_node_view($node, $view_mode, $langcode) {
+  if (uc_product_is_product($node)) {
+  	$gst_price = $node->roleindependent_sell_price * 1.1;
+  	$gst_member_price = $node->role_prices[4] * 1.1;
+    $node->content['roleindependent_sell_price'] = array(
+      '#theme' => 'uc_product_price',
+      '#title' => t('Regular price:'),
+      '#value' => $gst_price,
+      '#attributes' => array(
+        'class' => array(
+          'roleindependent-sell-price',
+        ),
+      ),
+    );
+    $node->content['member_price'] = array(
+      '#theme' => 'uc_product_price',
+      '#title' => t('Member price:'),
+      '#value' => $gst_member_price,
+      '#attributes' => array(
+        'class' => array(
+          'member-price',
+        ),
+      ),
+    );
+  }
+}
