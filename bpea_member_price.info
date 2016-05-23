@@ -1,0 +1,3 @@
+name = BPEA Member Price
+description = Show member prices and add gst to displayed prices.
+core = 7.x
