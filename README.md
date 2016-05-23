@@ -7,4 +7,4 @@ Inspired by this issue:
 
 https://www.drupal.org/node/2078221
 
-Not that the Role ID and Tax rate are hardcoded.
+Note that the Role ID and Tax rate are hardcoded.
