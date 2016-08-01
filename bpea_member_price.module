@@ -41,7 +41,7 @@ function bpea_member_price_field_extra_fields() {
 function bpea_member_price_node_view($node, $view_mode, $langcode) {
   if (uc_product_is_product($node)) {
   	$gst_price = $node->roleindependent_sell_price * 1.1;
-  	$gst_member_price = $node->role_prices[4] * 1.1;
+  	$gst_member_price = isset($node->role_prices[4]) ? ($node->role_prices[4] * 1.1) : 0;
     $node->content['roleindependent_sell_price'] = array(
       '#theme' => 'uc_product_price',
       '#title' => t('Regular price:'),
